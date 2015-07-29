@@ -29,16 +29,16 @@
   (gen/such-that #(and (> % 1) (<= % 1000))
                  gen/s-pos-int))
 
-(def reverse-sorted-vec
+(def sorted-vec
   (gen/fmap
-    (partial sort >)
+    sort
     (gen/vector integers-from-2-to-1000 100)))
 
 (defspec the-bigger-the-number-the-closer-the-result-to-1-but-being-bigger-than-1
          100
          (prop/for-all
-           [numbers reverse-sorted-vec]
+           [numbers sorted-vec]
            (let [results (map going numbers)]
              (and
                (every? #(> % 1.0) results)
-               (apply <= (map #(- % 1.0) results))))))
+               (apply >= (map #(- % 1.0) results))))))
