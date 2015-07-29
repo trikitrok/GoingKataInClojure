@@ -14,5 +14,4 @@
   "(1 / n!) * (1! + 2! + 3! + ... + n!)"
   [n]
   (/ (reduce + (map factorial (range 1 (inc n))))
-     (factorial n)))
-
+     (* 1.0 (factorial n))))

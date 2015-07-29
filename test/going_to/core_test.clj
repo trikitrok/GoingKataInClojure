@@ -7,7 +7,7 @@
 
   (fact
     "can compute the factorial of small numbers"
-    (map factorial [0 1 2 3 4 5 6 ]) => [1 1 2 6 24 120 720])
+    (map factorial [0 1 2 3 4 5 6]) => [1 1 2 6 24 120 720])
 
   (fact
     "can compute the factorial of much bigger numbers"
@@ -15,8 +15,9 @@
 
 (facts
   "about going(n) = (1 / n!) * (1! + 2! + 3! + ... + n!), n > 0"
-  (going 1) => 1
-  (going 2) => (* 1/2 (+ 1 2))
-  (going 3) => (* 1/6 (+ 1 2 6))
-  (going 4) => (* 1/24 (+ 1 2 6 24))
-  (going 6) => (* 1/720 (+ 1 2 6 24 120 720)))
+  (let [tolerance 1e-6]
+    (going 1) => (roughly 1.0 tolerance)
+    (going 2) => (roughly 1.5 tolerance)
+    (going 3) => (roughly 1.5 tolerance)
+    (going 4) => (roughly 1.375 tolerance)
+    (going 6) => (roughly 1.2125000000000001 tolerance)))
