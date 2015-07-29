@@ -29,15 +29,15 @@
   (gen/such-that #(and (> % 1) (<= % 1000))
                  gen/s-pos-int))
 
-(def sorted-vec
-  (gen/fmap
-    sort
-    (gen/vector integers-from-2-to-1000 100)))
+(def sorted-vec-of-integers-from-2-to-1000
+  (gen/fmap sort
+            (gen/fmap distinct
+                      (gen/vector integers-from-2-to-1000 100))))
 
 (defspec the-bigger-the-number-the-closer-the-result-to-1-but-being-bigger-than-1
          100
          (prop/for-all
-           [numbers sorted-vec]
+           [numbers sorted-vec-of-integers-from-2-to-1000]
            (let [results (map going numbers)]
              (and
                (every? #(> % 1.0) results)
